@@ -1,0 +1,35 @@
+End of the Party - Scenarios Database
+
+In this document I will be describing how I created a database to store randomly appearing events that dynamically function all within a handful of scenes.
+
+-------------------------------------------
+
+Data:
+
+For storing the data of a scenario, I used Scriptable Objects because of the amount of variablity we wanted in our scenarios.
+See Scenario.cs for the base scenario class or ScenarioExample.png for an example of one filled out in the Unity editor.
+
+-------------------------------------------
+
+Seed Generation:
+
+GameDataManager.cs holds all the connections between the scriptable objects and the game in run-time. This manager can generate a new run seed, create a run using a given seed, or load a saved run using another script.
+Each scenario is given a unique 3-digit index, with the first digit representing the scene index they are attached to. Each party member also has an id, represented as a single letter.
+The seed builder method is very particular in how it builds its seeds; scenarios cannot be repeated, boat scenarios can only be started on, and not brought back to later, all character classes are unique.
+The seed inputter is less picky, and allows for more custom play.
+
+-------------------------------------------
+
+Loading Scenarios:
+
+Scenarios are loaded using the ScenarioLoader.cs script. Party Members are instantiated, UI is loaded, skills are updated for the battle phase, and Actions are prepared using the Scenario string names.
+MethodsMasterList.cs (not included, see MethodsMasterList.png) converts strings into a Dictionary<string, Action> with a small amount of System.Reflection on load of the game.
+Calling MethodsMasterList.masterList[methodName] returns the Action of the method in MethodsMasterList.cs, allowing any Scenario to alter any object in the game.
+
+-------------------------------------------
+
+That is the bulk of how my Scenario database works in End of the Party. Of course, there is a lot more going on than just that, so please check out the full game!
+https://lebrra.itch.io/end-of-the-party
+
+  Fall 2020
+- Leah Blasczyk
